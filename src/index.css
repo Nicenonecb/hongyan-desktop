@@ -4,20 +4,110 @@
 
 @layer base {
   :root {
-    font-family:
-      ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-      sans-serif;
+    font-family: 'IBM Plex Sans', 'Noto Sans SC', 'PingFang SC', sans-serif;
     font-synthesis: none;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    --app-bg: #0e1117;
+    --app-bg-soft: #151a23;
+    --sidebar-bg: #1e232b;
+    --sidebar-bg-soft: #252c36;
+    --content-bg-top: #151a23;
+    --content-bg-bottom: #050608;
+    --panel: #171b22;
+    --panel-soft: #1d222b;
+    --line: #2d3440;
+    --line-soft: #252b35;
+    --ink: #edf1f8;
+    --muted: #9ba5b6;
+    --accent: #6da7ff;
+    --accent-soft: rgba(109, 167, 255, 0.18);
   }
 
   body {
-    @apply m-0 min-h-screen bg-slate-100 text-slate-900;
+    @apply m-0 min-h-screen;
+    color: var(--ink);
+    background: linear-gradient(180deg, #121722 0%, #07090d 100%);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3b4452 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #353d4a;
+    border-radius: 999px;
+  }
+
+  ::selection {
+    color: #ffffff;
+    background: rgba(109, 167, 255, 0.6);
   }
 }
 
 #root {
   min-height: 100vh;
+}
+
+@layer components {
+  .app-panel {
+    @apply rounded-2xl border;
+    border-color: var(--line);
+    background: var(--panel);
+  }
+
+  .app-panel-soft {
+    @apply rounded-xl border;
+    border-color: var(--line-soft);
+    background: var(--panel-soft);
+  }
+
+  .surface-title {
+    @apply text-xl font-semibold tracking-tight;
+    color: var(--ink);
+  }
+
+  .surface-subtitle {
+    @apply text-sm;
+    color: var(--muted);
+  }
+
+  .fade-up {
+    animation: fade-up 0.35s ease-out both;
+  }
+
+  .input-dark {
+    @apply w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition;
+    border-color: var(--line);
+    background: #10141b;
+    color: var(--ink);
+  }
+
+  .input-dark::placeholder {
+    color: #738097;
+  }
+
+  .input-dark:focus {
+    border-color: #508eea;
+    box-shadow: 0 0 0 3px rgba(80, 142, 234, 0.18);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

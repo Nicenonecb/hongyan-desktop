@@ -9,36 +9,53 @@ export type MenuItem = {
 type SidebarProps = {
   items: MenuItem[]
   title?: string
-  subtitle?: string
+  onOpenSettings: () => void
 }
 
 export function Sidebar({
   items,
-  title = 'Hongyan Desktop',
-  subtitle = '创作工作台',
+  title = '红颜写作',
+  onOpenSettings,
 }: SidebarProps) {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     [
-      'block rounded-xl px-4 py-3 transition',
+      'block rounded-xl border px-4 py-3 transition-all',
       isActive
-        ? 'bg-slate-900 text-white shadow-sm'
-        : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900',
+        ? 'border-blue-400/40 bg-blue-500/15 text-slate-100 shadow-[0_0_0_1px_rgba(109,167,255,0.2)]'
+        : 'border-transparent text-slate-300 hover:border-slate-700 hover:bg-[#2b313c] hover:text-slate-100',
     ].join(' ')
 
   return (
-    <aside className="w-full border-b border-slate-200 bg-white p-4 md:min-h-screen md:w-72 md:border-b-0 md:border-r md:p-6">
-      <div>
-        <p className="text-lg font-semibold text-slate-900">{title}</p>
-        <p className="mt-1 text-xs text-slate-500">{subtitle}</p>
+    <aside
+      className="fade-up flex w-full flex-col border-b border-[#313934] p-4 md:min-h-screen md:w-72 md:border-b-0 md:border-r md:p-5"
+      style={{ background: 'var(--sidebar-bg)' }}
+    >
+      <div
+        className="rounded-xl border p-4"
+        style={{
+          background: 'var(--sidebar-bg-soft)',
+          borderColor: '#37404c',
+        }}
+      >
+        <p className="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">工作区</p>
+        <p className="mt-1.5 text-lg font-semibold text-slate-100">{title}</p>
       </div>
-      <nav className="mt-5 grid gap-2 md:mt-8">
+      <nav className="mt-5 grid flex-1 content-start gap-2 md:mt-8">
         {items.map((item) => (
           <NavLink key={item.to} to={item.to} className={linkClass}>
-            <p className="text-sm font-medium">{item.label}</p>
-            <p className="mt-1 text-xs opacity-80">{item.note}</p>
+            <p className="text-sm font-semibold">{item.label}</p>
+            <p className="mt-1 text-xs text-slate-400/90">{item.note}</p>
           </NavLink>
         ))}
       </nav>
+      <button
+        type="button"
+        onClick={onOpenSettings}
+        className="mt-4 rounded-xl border px-4 py-3 text-left text-sm font-medium text-slate-200 transition hover:border-blue-500/50 hover:bg-[#2b313d]"
+        style={{ borderColor: '#3c4553', background: '#242b35' }}
+      >
+        设置
+      </button>
     </aside>
   )
 }
