@@ -15,4 +15,14 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [
+    {
+      files: ['electron/**/*.cjs', 'scripts/**/*.cjs', '.eslintrc.cjs'],
+      env: { node: true, browser: false, es2020: true },
+      parserOptions: { sourceType: 'script' },
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
 }

@@ -3,10 +3,12 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { Sidebar, type MenuItem } from './components/Sidebar'
 import { SettingsModal } from './components/SettingsModal'
 import { NewWorkComposer } from './components/NewWorkComposer'
+import { PromptManager } from './components/PromptManager'
 
 const menuItems: MenuItem[] = [
   { to: '/new-work', label: '新作品', note: '创建一个新的作品' },
   { to: '/works', label: '作品列表', note: '查看和管理已有作品' },
+  { to: '/prompts', label: '提示词管理', note: '本地 SQLite 提示词库' },
 ]
 
 function NewWorkPage() {
@@ -69,6 +71,10 @@ function WorksPage() {
   )
 }
 
+function PromptsPage() {
+  return <PromptManager />
+}
+
 function App() {
   const [settingsOpen, setSettingsOpen] = useState(false)
 
@@ -81,6 +87,7 @@ function App() {
           <Route path="/" element={<Navigate to="/new-work" replace />} />
           <Route path="/new-work" element={<NewWorkPage />} />
           <Route path="/works" element={<WorksPage />} />
+          <Route path="/prompts" element={<PromptsPage />} />
           <Route path="/settings" element={<Navigate to="/new-work" replace />} />
         </Routes>
       </main>

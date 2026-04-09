@@ -1,5 +1,30 @@
 const path = require('node:path')
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const { createPromptStore } = require('./prompt-store.cjs')
+
+let promptStore = null
+
+function registerIpcHandlers({ dbFilePath }) {
+  ipcMain.handle('db:get-info', () => {
+    const worksDir = path.join(app.getPath('documents'), 'Hongyan Desktop', 'works')
+    return {
+      dbFilePath,
+      worksDir,
+    }
+  })
+
+  ipcMain.handle('prompts:list', () => promptStore.listPrompts())
+
+  ipcMain.handle('prompts:create', (_event, payload) => promptStore.createPrompt(payload))
+
+  ipcMain.handle('prompts:update', (_event, payload) =>
+    promptStore.updatePrompt(Number(payload?.id), payload?.data ?? {}),
+  )
+
+  ipcMain.handle('prompts:delete', (_event, payload) =>
+    promptStore.deletePrompt(Number(payload?.id)),
+  )
+}
 
 function createMainWindow() {
   const win = new BrowserWindow({
@@ -26,6 +51,10 @@ function createMainWindow() {
 }
 
 app.whenReady().then(() => {
+  const dbFilePath = path.join(app.getPath('userData'), 'hongyan.db')
+  promptStore = createPromptStore({ dbFilePath })
+  registerIpcHandlers({ dbFilePath })
+
   createMainWindow()
 
   app.on('activate', () => {
@@ -33,6 +62,10 @@ app.whenReady().then(() => {
       createMainWindow()
     }
   })
+})
+
+app.on('before-quit', () => {
+  promptStore?.close()
 })
 
 app.on('window-all-closed', () => {
