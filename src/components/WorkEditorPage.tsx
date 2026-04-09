@@ -107,7 +107,7 @@ export function WorkEditorPage({ works, loadWorkById, onHydrateWork }: WorkEdito
         <p className="mt-2 surface-subtitle">{error || '该作品不存在或已被删除。'}</p>
         <Link
           to="/new-work"
-          className="mt-4 inline-flex rounded-xl bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+          className="mt-4 inline-flex rounded-xl border border-[#4a5260] bg-[#1b212b] px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-[#60697a] hover:bg-[#252d3a]"
         >
           返回新建作品
         </Link>

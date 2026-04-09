@@ -103,7 +103,7 @@ function WorksPage({ works, loading }: WorksPageProps) {
         <div className="flex gap-2">
           <Link
             to="/new-work"
-            className="rounded-xl bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="rounded-xl border border-[#4a5260] bg-[#1b212b] px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-[#60697a] hover:bg-[#252d3a]"
           >
             新建作品
           </Link>
@@ -123,7 +123,7 @@ function WorksPage({ works, loading }: WorksPageProps) {
             {works.map((work) => (
               <tr key={work.id} className="border-t border-[#2d3441] bg-[#151a22]">
                 <td className="px-4 py-3 font-medium text-slate-100">
-                  <Link to={`/work/${work.id}`} className="transition hover:text-blue-300">
+                  <Link to={`/work/${work.id}`} className="transition hover:text-slate-200">
                     {work.title}
                   </Link>
                 </td>
@@ -308,7 +308,7 @@ function App() {
                 : 'border-[#3d4656] bg-[#202733] text-slate-400 hover:text-slate-200',
             ].join(' ')}
           >
-            <span className="inline-block h-3.5 w-3.5 rounded bg-blue-500" />
+            <span className="inline-block h-3.5 w-3.5 rounded bg-slate-400" />
             <span className="truncate">红颜写作</span>
           </button>
           {openWorkTabs.map((workId) => {

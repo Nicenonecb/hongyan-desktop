@@ -22,7 +22,7 @@ export function Sidebar({
     [
       'block rounded-xl border px-4 py-3 transition-all',
       isActive
-        ? 'border-blue-400/40 bg-blue-500/15 text-slate-100 shadow-[0_0_0_1px_rgba(109,167,255,0.2)]'
+        ? 'border-[#4d5768] bg-[#2a313f] text-slate-100 shadow-[0_0_0_1px_rgba(120,132,153,0.22)]'
         : 'border-transparent text-slate-300 hover:border-slate-700 hover:bg-[#2b313c] hover:text-slate-100',
     ].join(' ')
 
@@ -54,7 +54,7 @@ export function Sidebar({
                 [
                   'block rounded-lg border px-2.5 py-2 text-xs transition',
                   isActive
-                    ? 'border-blue-400/35 bg-blue-500/15'
+                    ? 'border-[#4d5768] bg-[#2a313f]'
                     : 'border-transparent bg-[#171d27] hover:border-[#465369] hover:bg-[#1c2431]',
                 ].join(' ')
               }
@@ -67,7 +67,7 @@ export function Sidebar({
       <button
         type="button"
         onClick={onOpenSettings}
-        className="mt-4 rounded-xl border px-4 py-3 text-left text-sm font-medium text-slate-200 transition hover:border-blue-500/50 hover:bg-[#2b313d]"
+        className="mt-4 rounded-xl border px-4 py-3 text-left text-sm font-medium text-slate-100 transition hover:border-[#596274] hover:bg-[#2b313d]"
         style={{ borderColor: '#3c4553', background: '#242b35' }}
       >
         设置

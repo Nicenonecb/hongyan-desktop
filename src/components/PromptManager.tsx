@@ -188,7 +188,7 @@ export function PromptManager() {
           <button
             type="button"
             onClick={() => void handleCreatePrompt()}
-            className="rounded-xl bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+            className="rounded-xl border border-[#4a5260] bg-[#1b212b] px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-[#60697a] hover:bg-[#252d3a]"
           >
             新增提示词
           </button>
@@ -202,7 +202,7 @@ export function PromptManager() {
               onClick={() => syncSelection(prompt)}
               className={`w-full rounded-xl border px-3 py-2 text-left transition ${
                 prompt.id === selectedPromptId
-                  ? 'border-blue-400/40 bg-blue-500/10'
+                  ? 'border-[#4d5768] bg-[#2a313f]'
                   : 'border-[#323a47] bg-[#141a24] hover:border-[#425170]'
               }`}
             >
@@ -243,7 +243,7 @@ export function PromptManager() {
               <button
                 type="button"
                 onClick={() => void handleSavePrompt()}
-                className="rounded-xl bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
+                className="rounded-xl border border-[#4a5260] bg-[#1b212b] px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-[#60697a] hover:bg-[#252d3a]"
               >
                 保存
               </button>

@@ -19,7 +19,7 @@ const sections: Section[] = [
 ]
 
 const inputClass =
-  'w-full rounded-xl border border-[#363f4d] bg-[#141923] px-3.5 py-2.5 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/25'
+  'w-full rounded-xl border border-[#363f4d] bg-[#141923] px-3.5 py-2.5 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-[#596274] focus:ring-2 focus:ring-[#596274]/25'
 
 export function SettingsModal({ open, onClose }: SettingsModalProps) {
   const [activeSection, setActiveSection] = useState<SectionId>('personalization')
@@ -69,7 +69,7 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
                   className={[
                     'rounded-lg border px-3 py-2 text-left text-sm transition',
                     active
-                      ? 'border-blue-400/45 bg-blue-500/15 text-blue-100'
+                      ? 'border-[#4d5768] bg-[#2a313f] text-slate-100'
                       : 'border-transparent text-slate-300 hover:border-[#364151] hover:bg-[#232a35] hover:text-slate-100',
                   ].join(' ')}
                 >
@@ -111,13 +111,13 @@ export function SettingsModal({ open, onClose }: SettingsModalProps) {
             >
               取消
             </button>
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg bg-blue-600 px-3.5 py-2 text-sm font-semibold text-white transition hover:bg-blue-500"
-            >
-              保存设置
-            </button>
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-lg border border-[#4a5260] bg-[#1b212b] px-3.5 py-2 text-sm font-semibold text-slate-100 transition hover:border-[#60697a] hover:bg-[#252d3a]"
+              >
+                保存设置
+              </button>
           </footer>
         </section>
       </div>
@@ -198,7 +198,7 @@ function ModelPanel() {
                 className={[
                   'min-w-[88px] rounded-xl border px-3 py-2 text-sm font-medium transition',
                   defaultModelIndex === index
-                    ? 'border-blue-400/45 bg-blue-500/15 text-blue-100'
+                    ? 'border-[#4d5768] bg-[#2a313f] text-slate-100'
                     : 'border-[#37414f] bg-[#1a202a] text-slate-300 hover:bg-[#232a35] hover:text-slate-100',
                 ].join(' ')}
               >

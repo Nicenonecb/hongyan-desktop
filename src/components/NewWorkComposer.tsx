@@ -96,7 +96,7 @@ export function NewWorkComposer({ creating, onCreateWork }: NewWorkComposerProps
       onDrop={handleDrop}
       className={`mx-auto flex w-full max-w-4xl flex-col rounded-[18px] border px-3 py-2.5 transition md:px-3.5 md:py-3 ${
         isDragging
-          ? 'border-blue-500 bg-[#212634]'
+          ? 'border-[#596274] bg-[#212634]'
           : 'border-[#2a2d34] bg-gradient-to-b from-[#222429] to-[#1a1c21]'
       }`}
     >
