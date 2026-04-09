@@ -146,7 +146,7 @@ function PersonalizationPanel() {
 
 function ModelPanel() {
   const [modelIds, setModelIds] = useState<string[]>([''])
-  const [defaultModelId, setDefaultModelId] = useState('')
+  const [defaultModelIndex, setDefaultModelIndex] = useState(0)
 
   const updateModelId = (index: number, value: string) => {
     setModelIds((current) =>
@@ -161,9 +161,17 @@ function ModelPanel() {
   const removeModelId = (index: number) => {
     setModelIds((current) => {
       if (current.length === 1) return current
-      return current.filter((_, itemIndex) => itemIndex !== index)
+      const next = current.filter((_, itemIndex) => itemIndex !== index)
+      setDefaultModelIndex((currentDefaultIndex) => {
+        if (currentDefaultIndex === index) return 0
+        if (currentDefaultIndex > index) return currentDefaultIndex - 1
+        return currentDefaultIndex
+      })
+      return next
     })
   }
+
+  const defaultModelId = modelIds[defaultModelIndex] ?? ''
 
   return (
     <div className="space-y-5">
@@ -173,7 +181,7 @@ function ModelPanel() {
       <Field label="API Key" hint="仅保存在本地设备。">
         <input type="password" placeholder="sk-..." className={inputClass} />
       </Field>
-      <Field label="模型 ID 列表" hint="手动输入模型 ID，可配置多个。">
+      <Field label="模型 ID 列表" hint="可配置多个模型，并在列表中直接设置默认项。">
         <div className="space-y-2.5">
           {modelIds.map((modelId, index) => (
             <div key={index} className="flex gap-2">
@@ -186,9 +194,22 @@ function ModelPanel() {
               />
               <button
                 type="button"
+                onClick={() => setDefaultModelIndex(index)}
+                className={[
+                  'min-w-[88px] rounded-xl border px-3 py-2 text-sm font-medium transition',
+                  defaultModelIndex === index
+                    ? 'border-blue-400/45 bg-blue-500/15 text-blue-100'
+                    : 'border-[#37414f] bg-[#1a202a] text-slate-300 hover:bg-[#232a35] hover:text-slate-100',
+                ].join(' ')}
+              >
+                {defaultModelIndex === index ? '默认中' : '设为默认'}
+              </button>
+              <button
+                type="button"
                 onClick={() => removeModelId(index)}
                 disabled={modelIds.length === 1}
-                className="rounded-xl border border-[#37414f] bg-[#1a202a] px-3 py-2 text-sm text-slate-300 transition hover:bg-[#232a35] disabled:cursor-not-allowed disabled:opacity-40"
+                aria-label={`删除模型 ID ${index + 1}`}
+                className="min-w-[72px] rounded-xl border border-red-500/35 bg-red-500/10 px-3 py-2 text-sm font-medium text-red-200 transition hover:border-red-400/50 hover:bg-red-500/20 disabled:cursor-not-allowed disabled:border-[#37414f] disabled:bg-[#1a202a] disabled:text-slate-500"
               >
                 删除
               </button>
@@ -201,16 +222,13 @@ function ModelPanel() {
           >
             + 新增模型 ID
           </button>
+          <p className="text-xs text-slate-400">
+            当前默认：
+            <span className="ml-1 font-medium text-slate-200">
+              {defaultModelId.trim() || '未设置（请先填写模型 ID）'}
+            </span>
+          </p>
         </div>
-      </Field>
-      <Field label="默认模型 ID" hint="新会话默认使用的模型 ID。">
-        <input
-          type="text"
-          value={defaultModelId}
-          onChange={(event) => setDefaultModelId(event.target.value)}
-          placeholder="请输入默认模型 ID"
-          className={inputClass}
-        />
       </Field>
     </div>
   )

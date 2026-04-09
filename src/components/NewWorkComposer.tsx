@@ -2,7 +2,12 @@ import { useState, type ChangeEvent, type DragEvent } from 'react'
 
 const categoryOptions = ['都市高武', '都市脑洞', '历史脑洞', '玄幻脑洞']
 
-export function NewWorkComposer() {
+type NewWorkComposerProps = {
+  creating: boolean
+  onCreateWork: (input: WorkInput) => Promise<void>
+}
+
+export function NewWorkComposer({ creating, onCreateWork }: NewWorkComposerProps) {
   const [category, setCategory] = useState(categoryOptions[0])
   const [message, setMessage] = useState('')
   const [attachments, setAttachments] = useState<File[]>([])
@@ -60,10 +65,27 @@ export function NewWorkComposer() {
     )
   }
 
-  const canSend = message.trim().length > 0 || attachments.length > 0
+  const canSend = (message.trim().length > 0 || attachments.length > 0) && !creating
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!canSend) return
+
+    const cleanMessage = message.trim()
+    const titleSeed = cleanMessage
+      .split('\n')
+      .map((line) => line.trim())
+      .find(Boolean)
+      ?.slice(0, 24)
+
+    await onCreateWork({
+      title: titleSeed,
+      category,
+      message: cleanMessage,
+      attachments: attachments.map((file) => file.name),
+    })
+
+    setMessage('')
+    setAttachments([])
   }
 
   return (
@@ -72,7 +94,7 @@ export function NewWorkComposer() {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      className={`mx-auto flex w-full max-w-4xl flex-col rounded-[18px] border px-3 py-2.5 md:px-3.5 md:py-3 transition ${
+      className={`mx-auto flex w-full max-w-4xl flex-col rounded-[18px] border px-3 py-2.5 transition md:px-3.5 md:py-3 ${
         isDragging
           ? 'border-blue-500 bg-[#212634]'
           : 'border-[#2a2d34] bg-gradient-to-b from-[#222429] to-[#1a1c21]'
@@ -138,10 +160,10 @@ export function NewWorkComposer() {
         <div className="ml-auto flex items-center gap-2">
           <button
             type="button"
-            onClick={handleSend}
+            onClick={() => void handleSend()}
             disabled={!canSend}
             className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#c2c5cb] text-[#242830] transition hover:bg-[#d3d6db] disabled:cursor-not-allowed disabled:bg-[#4a4f58] disabled:text-[#7d828d]"
-            aria-label="发送"
+            aria-label={creating ? '创建中' : '创建作品'}
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor">
               <path d="M12 5v14M6.5 10.5L12 5l5.5 5.5" strokeWidth="2" strokeLinecap="round" />

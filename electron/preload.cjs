@@ -11,4 +11,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     update: (id, data) => ipcRenderer.invoke('prompts:update', { id, data }),
     delete: (id) => ipcRenderer.invoke('prompts:delete', { id }),
   },
+  works: {
+    list: () => ipcRenderer.invoke('works:list'),
+    insert: (data) => ipcRenderer.invoke('works:insert', data),
+    getById: (id) => ipcRenderer.invoke('works:get-by-id', { id }),
+  },
 })

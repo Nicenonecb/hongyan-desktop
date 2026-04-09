@@ -83,6 +83,14 @@
     animation: fade-up 0.35s ease-out both;
   }
 
+  .titlebar-drag {
+    -webkit-app-region: drag;
+  }
+
+  .titlebar-no-drag {
+    -webkit-app-region: no-drag;
+  }
+
   .input-dark {
     @apply w-full rounded-xl border px-4 py-2.5 text-sm outline-none transition;
     border-color: var(--line);

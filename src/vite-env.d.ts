@@ -21,6 +21,28 @@ declare global {
     worksDir: string
   }
 
+  type WorkRecord = {
+    id: number
+    title: string
+    category: string
+    message: string
+    attachments: string[]
+    chapters: string[]
+    library: string[]
+    characters: string[]
+    lore: string[]
+    outline: string[]
+    createdAt: number
+    updatedAt: number
+  }
+
+  type WorkInput = {
+    title?: string
+    category: string
+    message: string
+    attachments: string[]
+  }
+
   interface ElectronAPI {
     platform: string
     db: {
@@ -31,6 +53,11 @@ declare global {
       create: (data: PromptInput) => Promise<PromptRecord>
       update: (id: number, data: Partial<PromptInput>) => Promise<PromptRecord | null>
       delete: (id: number) => Promise<boolean>
+    }
+    works: {
+      list: () => Promise<WorkRecord[]>
+      insert: (data: WorkInput) => Promise<WorkRecord>
+      getById: (id: number) => Promise<WorkRecord | null>
     }
   }
 

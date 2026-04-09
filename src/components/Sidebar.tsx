@@ -3,18 +3,19 @@ import { NavLink } from 'react-router-dom'
 export type MenuItem = {
   to: string
   label: string
-  note: string
 }
 
 type SidebarProps = {
   items: MenuItem[]
-  title?: string
+  works: WorkRecord[]
+  worksLoading: boolean
   onOpenSettings: () => void
 }
 
 export function Sidebar({
   items,
-  title = '红颜写作',
+  works,
+  worksLoading,
   onOpenSettings,
 }: SidebarProps) {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
@@ -27,27 +28,42 @@ export function Sidebar({
 
   return (
     <aside
-      className="fade-up flex w-full flex-col border-b border-[#313934] p-4 md:min-h-screen md:w-72 md:border-b-0 md:border-r md:p-5"
+      className="fade-up flex w-full flex-col border-b border-[#313934] p-4 md:h-full md:w-72 md:border-b-0 md:border-r md:p-5"
       style={{ background: 'var(--sidebar-bg)' }}
     >
-      <div
-        className="rounded-xl border p-4"
-        style={{
-          background: 'var(--sidebar-bg-soft)',
-          borderColor: '#37404c',
-        }}
-      >
-        <p className="text-xs font-medium uppercase tracking-[0.15em] text-slate-400">工作区</p>
-        <p className="mt-1.5 text-lg font-semibold text-slate-100">{title}</p>
-      </div>
-      <nav className="mt-5 grid flex-1 content-start gap-2 md:mt-8">
+      <nav className="grid content-start gap-2">
         {items.map((item) => (
           <NavLink key={item.to} to={item.to} className={linkClass}>
             <p className="text-sm font-semibold">{item.label}</p>
-            <p className="mt-1 text-xs text-slate-400/90">{item.note}</p>
           </NavLink>
         ))}
       </nav>
+
+      <div className="mt-3 flex min-h-0 flex-1 flex-col">
+        <p className="px-1 text-xs font-medium uppercase tracking-[0.15em] text-slate-400">作品列表</p>
+        <div className="mt-2 min-h-0 flex-1 space-y-1 overflow-y-auto pr-1">
+          {worksLoading ? <p className="text-xs text-slate-500">正在同步作品...</p> : null}
+          {!worksLoading && works.length === 0 ? (
+            <p className="text-xs text-slate-500">还没有作品，先创建一个吧。</p>
+          ) : null}
+          {works.map((work) => (
+            <NavLink
+              key={work.id}
+              to={`/work/${work.id}`}
+              className={({ isActive }) =>
+                [
+                  'block rounded-lg border px-2.5 py-2 text-xs transition',
+                  isActive
+                    ? 'border-blue-400/35 bg-blue-500/15'
+                    : 'border-transparent bg-[#171d27] hover:border-[#465369] hover:bg-[#1c2431]',
+                ].join(' ')
+              }
+            >
+              <p className="truncate text-sm font-medium text-slate-100">{work.title}</p>
+            </NavLink>
+          ))}
+        </div>
+      </div>
       <button
         type="button"
         onClick={onOpenSettings}
