@@ -267,6 +267,7 @@ function App() {
 
   const activeWorkId = parseWorkIdFromPath(location.pathname)
   const homeTabActive = activeWorkId === null
+  const showShellSidebar = activeWorkId === null
 
   useEffect(() => {
     if (!activeWorkId) return
@@ -349,15 +350,27 @@ function App() {
         </div>
       </header>
 
-      <div className="flex min-h-0 flex-1 flex-col md:flex-row md:overflow-hidden">
-        <Sidebar
-          items={menuItems}
-          works={works}
-          worksLoading={worksLoading}
-          onOpenSettings={() => setSettingsOpen(true)}
-        />
+      <div
+        className={[
+          'flex min-h-0 flex-1 flex-col',
+          showShellSidebar ? 'md:flex-row md:overflow-hidden' : 'overflow-hidden',
+        ].join(' ')}
+      >
+        {showShellSidebar ? (
+          <Sidebar
+            items={menuItems}
+            works={works}
+            worksLoading={worksLoading}
+            onOpenSettings={() => setSettingsOpen(true)}
+          />
+        ) : null}
 
-        <main className="relative min-h-0 flex-1 p-4 md:h-full md:overflow-y-auto md:p-6">
+        <main
+          className={[
+            'relative min-h-0 flex-1 md:h-full',
+            showShellSidebar ? 'p-4 md:overflow-y-auto md:p-6' : 'overflow-hidden p-0',
+          ].join(' ')}
+        >
           <Routes>
             <Route path="/" element={<Navigate to="/new-work" replace />} />
             <Route
